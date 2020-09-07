@@ -17,7 +17,7 @@ endif()
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     set(CPPFILESYSTEM "stdc++fs")
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    set(CPPFILESYSTEM "c++experimental")
+    set(CPPFILESYSTEM "c++fs")
 endif()
 
 set (PROJECTS
