@@ -14,7 +14,11 @@ if("${CMAKE_BUILD_TYPE}" STREQUAL "")
 	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-g -O2 -fpic")
 endif()
 
-set(CPPFILESYSTEM "stdc++fs")
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    set(CPPFILESYSTEM "stdc++fs")
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    set(CPPFILESYSTEM "c++experimental")
+endif()
 
 set (PROJECTS
 	src/exe/cmc
