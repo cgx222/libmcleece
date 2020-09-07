@@ -40,6 +40,6 @@ script:
     - cmake ..
     - make -j2
     - make install
-    - (cd dist/bin/ && (echo "password" | ./mick generate-keypair --keypair-path=/tmp) && mv /tmp/identity.pk /tmp/test.pk && mv /tmp/identity.sk /tmp/test.sk)
+    - (cd ../dist/bin/ && (echo "password" | ./mick generate-keypair --keypair-path=/tmp) && mv /tmp/identity.pk /tmp/test.pk && mv /tmp/identity.sk /tmp/test.sk)
     - make test CTEST_OUTPUT_ON_FAILURE=TRUE
-    - cppcheck src/
+    - cppcheck ../src/
