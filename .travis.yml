@@ -10,11 +10,10 @@ addons: &gcc7
 addons: &clang6
   apt:
     packages:
-      - clang-10
-      - libc++-dev
+      - clang-6.0
     sources:
       - ubuntu-toolchain-r-test
-      - llvm-toolchain-bionic-10
+      - llvm-toolchain-bionic-6.0
 
 matrix:
   include:
@@ -23,7 +22,7 @@ matrix:
       dist: bionic
       addons: &gcc7
 
-    - env: CXX="clang++-10" CC="clang-10"
+    - env: CXX="clang++-6.0" CC="clang-6.0"
       os: linux
       dist: bionic
       addons: &clang6
