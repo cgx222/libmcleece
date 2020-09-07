@@ -15,9 +15,9 @@ if("${CMAKE_BUILD_TYPE}" STREQUAL "")
 endif()
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 8.0)
-        set(CPPFILESYSTEM "stdc++fs")
-    endif()
+    set(CPPFILESYSTEM "stdc++fs")
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    set(CPPFILESYSTEM "c++fs")
 endif()
 
 set (PROJECTS
