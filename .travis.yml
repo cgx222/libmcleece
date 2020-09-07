@@ -4,7 +4,6 @@ addons: &gcc7
   apt:
     packages:
       - g++-7
-      - cppcheck
     sources:
       - ubuntu-toolchain-r-test
 
@@ -29,7 +28,7 @@ matrix:
       addons: &clang6
 
 before_install:
-  - sudo apt-get -y install libssl-dev libsodium-dev
+  - sudo apt-get -y install libssl-dev libsodium-dev cppcheck
 
 before_script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export CXX="clang++" CC="clang"; fi
@@ -40,6 +39,7 @@ script:
     - mkdir -p build && cd build
     - cmake ..
     - make -j2
+    - make install
     - (cd dist/bin/ && (echo "password" | ./mick generate-keypair --keypair-path=/tmp) && mv /tmp/identity.pk /tmp/test.pk && mv /tmp/identity.sk /tmp/test.sk)
     - make test CTEST_OUTPUT_ON_FAILURE=TRUE
     - cppcheck src/
