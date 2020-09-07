@@ -11,6 +11,7 @@ addons: &clang6
   apt:
     packages:
       - clang-6.0
+      - libc++-dev
     sources:
       - ubuntu-toolchain-r-test
       - llvm-toolchain-bionic-6.0
