@@ -10,7 +10,8 @@ matrix:
         packages: ['g++-7', 'cppcheck']
         sources: ['ubuntu-toolchain-r-test']
     after_success:
-      - cppcheck src/
+      - ls -lR
+      - cppcheck ../src/
 
   - env: CXX="clang++-6.0" CC="clang-6.0"
     os: linux
