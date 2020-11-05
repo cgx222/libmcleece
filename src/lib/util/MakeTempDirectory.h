@@ -8,8 +8,8 @@
 class MakeTempDirectory
 {
 public:
-	MakeTempDirectory(bool cleanup=true)
-		: _cleanup(cleanup)
+	MakeTempDirectory(bool cleanup = true)
+	    : _cleanup(cleanup)
 	{
 		_path = std::tmpnam(nullptr);
 		std::experimental::filesystem::create_directory(_path);

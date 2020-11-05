@@ -3,22 +3,24 @@
 #define LIBMCLEECE_API_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-static const int mcleece_flag_rawbinary = 0;
-static const int mcleece_flag_base64 = 1;
+	static const int mcleece_flag_rawbinary = 0;
+	static const int mcleece_flag_base64 = 1;
 
-int mcleece_generate_keypair(char* keypath, unsigned keypath_len, char* pw, unsigned pw_length);
+	int mcleece_generate_keypair(char* keypath, unsigned keypath_len, char* pw, unsigned pw_length);
 
-int mcleece_encrypt(char* keypath, unsigned keypath_len, char* srcpath, unsigned srcpath_len, char* dstpath, unsigned dstpath_len, int flags);
-int mcleece_encrypt_stdout(char* keypath, unsigned keypath_len, char* srcpath, unsigned srcpath_len, int flags);
+	int mcleece_encrypt(char* keypath, unsigned keypath_len, char* srcpath, unsigned srcpath_len, char* dstpath, unsigned dstpath_len, int flags);
+	int mcleece_encrypt_stdout(char* keypath, unsigned keypath_len, char* srcpath, unsigned srcpath_len, int flags);
 
-int mcleece_decrypt(char* keypath, unsigned keypath_len, char* pw, unsigned pw_length, char* srcpath, unsigned srcpath_len, char* dstpath, unsigned dstpath_len, int flags);
-int mcleece_decrypt_stdout(char* keypath, unsigned keypath_len, char* pw, unsigned pw_length, char* srcpath, unsigned srcpath_len, int flags);
+	int mcleece_decrypt(char* keypath, unsigned keypath_len, char* pw, unsigned pw_length, char* srcpath, unsigned srcpath_len, char* dstpath,
+	                    unsigned dstpath_len, int flags);
+	int mcleece_decrypt_stdout(char* keypath, unsigned keypath_len, char* pw, unsigned pw_length, char* srcpath, unsigned srcpath_len, int flags);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // LIBMCLEECE_API_H
+#endif  // LIBMCLEECE_API_H

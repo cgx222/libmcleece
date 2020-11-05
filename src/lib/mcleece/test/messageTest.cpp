@@ -10,8 +10,7 @@
 using std::string;
 using namespace std;
 
-
-TEST_CASE( "messageTest/testRoundtrip", "[unit]" )
+TEST_CASE("messageTest/testRoundtrip", "[unit]")
 {
 	MakeTempDirectory tempdir;
 
@@ -25,12 +24,11 @@ TEST_CASE( "messageTest/testRoundtrip", "[unit]" )
 	std::string sessiontext = mcleece::encode_session(session, n);
 
 	auto session_nonce = mcleece::decode_session(secret, sessiontext);
-	assertTrue( session_nonce );
+	assertTrue(session_nonce);
 
 	mcleece::session_key& enc_session = session_nonce->first;
 	mcleece::nonce& enc_n = session_nonce->second;
 
 	std::string message = mcleece::decrypt(enc_session, ciphertext, enc_n);
-	assertEquals( "hello world", message );
+	assertEquals("hello world", message);
 }
-

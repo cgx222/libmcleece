@@ -10,7 +10,8 @@
 #include <fstream>
 #include <string>
 
-namespace mcleece {
+namespace mcleece
+{
 
 class private_key
 {
@@ -27,8 +28,7 @@ protected:
 	}
 
 public:
-	private_key()
-	{}
+	private_key() {}
 
 	private_key(std::string filename, std::string pw)
 	{
@@ -97,4 +97,4 @@ protected:
 	DATA_ARRAY _data;
 };
 
-}
+}  // namespace mcleece

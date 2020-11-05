@@ -12,13 +12,18 @@ class b64_outstream
 public:
 	b64_outstream(OUTSTREAM& stream)
 	    : _stream(stream)
-	{}
+	{
+	}
 
 	~b64_outstream()
 	{
-		try {
+		try
+		{
 			flush();
-		} catch (const std::exception& e) {}  // it's not the end of the world -- we just failed to write
+		}
+		catch (const std::exception& e)
+		{
+		}  // it's not the end of the world -- we just failed to write
 	}
 
 	b64_outstream& write(const char* data, unsigned length)
@@ -32,7 +37,7 @@ public:
 		if (_eidx)
 		{
 			unsigned remainder = std::min<unsigned>(_extra.size() - _eidx, length);
-			std::copy(data, data+remainder, &_extra[_eidx]);
+			std::copy(data, data + remainder, &_extra[_eidx]);
 			data += remainder;
 			length -= remainder;
 
@@ -44,7 +49,7 @@ public:
 		if (_eidx != 0)
 		{
 			length -= _eidx;
-			std::copy(data+length, data+length+_eidx, _extra.data());
+			std::copy(data + length, data + length + _eidx, _extra.data());
 		}
 
 		write_direct(data, length);

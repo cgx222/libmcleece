@@ -21,7 +21,7 @@ public:
 
 	nonce(const char* data)
 	{
-		std::copy(data, data+SIZE, _data.data());
+		std::copy(data, data + SIZE, _data.data());
 	}
 
 	void randomize()
@@ -42,11 +42,11 @@ public:
 	nonce& operator++()
 	{
 		// could also do this by going <-> an int, but this is probably more straightforward?
-		for (int i = _data.size()-1; i >= 0; --i)
+		for (int i = _data.size() - 1; i >= 0; --i)
 		{
 			unsigned char temp = _data[i];
 			if (++_data[i] > temp)
-				break; // if no overflow, we're done
+				break;  // if no overflow, we're done
 			else if (i == 0)
 				_data = {0};
 		}
@@ -57,4 +57,4 @@ protected:
 	std::array<unsigned char, SIZE> _data;
 };
 
-}
+}  // namespace mcleece

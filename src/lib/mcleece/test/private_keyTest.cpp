@@ -10,8 +10,7 @@
 using std::string;
 using namespace std;
 
-
-TEST_CASE( "private_keyTest/testSaveLoad", "[unit]" )
+TEST_CASE("private_keyTest/testSaveLoad", "[unit]")
 {
 	MakeTempDirectory tempdir;
 
@@ -19,7 +18,7 @@ TEST_CASE( "private_keyTest/testSaveLoad", "[unit]" )
 	for (unsigned i = 0; i < sec.size(); ++i)
 		sec.data()[i] = 48 + (i % 10);
 
-	assertTrue( sec.save(tempdir.path() / "foo.sk", "password") );
+	assertTrue(sec.save(tempdir.path() / "foo.sk", "password"));
 
 	mcleece::private_key rek(tempdir.path() / "foo.sk", "password");
 

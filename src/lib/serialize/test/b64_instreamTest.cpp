@@ -8,8 +8,7 @@
 
 using std::string;
 
-
-TEST_CASE( "b64_instreamTest/testDecode.Simple", "[unit]" )
+TEST_CASE("b64_instreamTest/testDecode.Simple", "[unit]")
 {
 	std::stringstream ss;
 	ss << "aGVsbG8gZnJpZW5kcw==";
@@ -26,10 +25,10 @@ TEST_CASE( "b64_instreamTest/testDecode.Simple", "[unit]" )
 
 	assertFalse(bs);
 
-	assertEquals( "hello friends", buff );
+	assertEquals("hello friends", buff);
 }
 
-TEST_CASE( "b64_instreamTest/testDecode.Piecemeal", "[unit]" )
+TEST_CASE("b64_instreamTest/testDecode.Piecemeal", "[unit]")
 {
 	std::stringstream ss;
 	ss << "aGVsbG8gZnJpZW5kcw==";
@@ -42,26 +41,26 @@ TEST_CASE( "b64_instreamTest/testDecode.Piecemeal", "[unit]" )
 
 	bs.read(buff.data(), buff.size());
 	assertEquals(6, bs.gcount());
-	assertEquals( "hello ", buff );
+	assertEquals("hello ", buff);
 
-	assertTrue( bs );
+	assertTrue(bs);
 
 	bs.read(buff.data(), buff.size());
 	assertEquals(6, bs.gcount());
 	buff.resize(bs.gcount());
-	assertEquals( "friend", buff );
+	assertEquals("friend", buff);
 
-	assertTrue( bs );
+	assertTrue(bs);
 
 	bs.read(buff.data(), buff.size());
 	assertEquals(1, bs.gcount());
 	buff.resize(bs.gcount());
-	assertEquals( "s", buff );
+	assertEquals("s", buff);
 
-	assertFalse( bs );
+	assertFalse(bs);
 
 	bs.read(buff.data(), buff.size());
 	assertEquals(0, bs.gcount());
 	buff.resize(bs.gcount());
-	assertEquals( "", buff );
+	assertEquals("", buff);
 }

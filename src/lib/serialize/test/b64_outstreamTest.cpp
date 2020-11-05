@@ -8,24 +8,23 @@
 
 using std::string;
 
-
-TEST_CASE( "b64_outstreamTest/testEncode.Simple", "[unit]" )
+TEST_CASE("b64_outstreamTest/testEncode.Simple", "[unit]")
 {
 	std::stringstream ss;
 	b64_outstream bs(ss);
 
 	bs << "hello friends";
 
-	assertEquals( "aGVsbG8gZnJpZW5k", ss.str() );
+	assertEquals("aGVsbG8gZnJpZW5k", ss.str());
 
-	assertTrue( bs.flush() );
-	assertEquals( "aGVsbG8gZnJpZW5kcw==", ss.str() );
+	assertTrue(bs.flush());
+	assertEquals("aGVsbG8gZnJpZW5kcw==", ss.str());
 
-	assertFalse( bs.flush() );
-	assertEquals( "aGVsbG8gZnJpZW5kcw==", ss.str() );
+	assertFalse(bs.flush());
+	assertEquals("aGVsbG8gZnJpZW5kcw==", ss.str());
 }
 
-TEST_CASE( "b64_streamTest/testEncode.FlushOnDestructor", "[unit]" )
+TEST_CASE("b64_streamTest/testEncode.FlushOnDestructor", "[unit]")
 {
 	std::stringstream ss;
 	{
@@ -33,5 +32,5 @@ TEST_CASE( "b64_streamTest/testEncode.FlushOnDestructor", "[unit]" )
 		bs << "hello friends";
 	}
 
-	assertEquals( "aGVsbG8gZnJpZW5kcw==", ss.str() );
+	assertEquals("aGVsbG8gZnJpZW5kcw==", ss.str());
 }

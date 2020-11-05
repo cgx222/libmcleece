@@ -6,8 +6,8 @@
 #include <string>
 #include <vector>
 
-namespace mcleece {
-
+namespace mcleece
+{
 
 // this class currently serves two distinct purposes right now, which is interesting
 // maybe a protected subclass with the "more public" methods? (and hiding the data accessors?)
@@ -69,4 +69,4 @@ protected:
 	ENCRYPTED_ARRAY _encryptedKey;
 };
 
-}
+}  // namespace mcleece

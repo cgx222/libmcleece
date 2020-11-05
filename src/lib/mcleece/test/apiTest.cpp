@@ -5,13 +5,13 @@
 #include "util/File.h"
 #include "util/MakeTempDirectory.h"
 
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <string>
 
 using std::string;
 
-TEST_CASE( "apiTest/testRoundtrip", "[unit]" )
+TEST_CASE("apiTest/testRoundtrip", "[unit]")
 {
 	MakeTempDirectory tempdir;
 
@@ -20,7 +20,7 @@ TEST_CASE( "apiTest/testRoundtrip", "[unit]" )
 
 	{
 		int res = mcleece_generate_keypair(keypath.data(), keypath.size(), password.data(), password.size());
-		assertEquals( 0, res );
+		assertEquals(0, res);
 	}
 
 	string srcPath = tempdir.path() / "helloworld";
@@ -33,20 +33,21 @@ TEST_CASE( "apiTest/testRoundtrip", "[unit]" )
 	{
 		string pkpath = keypath + ".pk";
 		int res = mcleece_encrypt(pkpath.data(), pkpath.size(), srcPath.data(), srcPath.size(), encryptedPath.data(), encryptedPath.size(), 0);
-		assertEquals( 0, res );
+		assertEquals(0, res);
 	}
 
 	string dstPath = tempdir.path() / "decrypted";
 	{
 		string skpath = keypath + ".sk";
-		int res = mcleece_decrypt(skpath.data(), skpath.size(), password.data(), password.size(), encryptedPath.data(), encryptedPath.size(), dstPath.data(), dstPath.size(), 0);
+		int res = mcleece_decrypt(skpath.data(), skpath.size(), password.data(), password.size(), encryptedPath.data(), encryptedPath.size(),
+		                          dstPath.data(), dstPath.size(), 0);
 		assertEquals(0, res);
 	}
 
-	assertEquals( "hello friends", File(dstPath).read_all() );
+	assertEquals("hello friends", File(dstPath).read_all());
 }
 
-TEST_CASE( "apiTest/testRoundtrip.b64", "[unit]" )
+TEST_CASE("apiTest/testRoundtrip.b64", "[unit]")
 {
 	MakeTempDirectory tempdir;
 
@@ -56,7 +57,7 @@ TEST_CASE( "apiTest/testRoundtrip.b64", "[unit]" )
 
 	{
 		int res = mcleece_generate_keypair(keypath.data(), keypath.size(), password.data(), password.size());
-		assertEquals( 0, res );
+		assertEquals(0, res);
 	}
 
 	string srcPath = tempdir.path() / "helloworld";
@@ -68,16 +69,18 @@ TEST_CASE( "apiTest/testRoundtrip.b64", "[unit]" )
 	string encryptedPath = tempdir.path() / "encrypted_msg";
 	{
 		string pkpath = keypath + ".pk";
-		int res = mcleece_encrypt(pkpath.data(), pkpath.size(), srcPath.data(), srcPath.size(), encryptedPath.data(), encryptedPath.size(), mcleece_flag_base64);
-		assertEquals( 0, res );
+		int res = mcleece_encrypt(pkpath.data(), pkpath.size(), srcPath.data(), srcPath.size(), encryptedPath.data(), encryptedPath.size(),
+		                          mcleece_flag_base64);
+		assertEquals(0, res);
 	}
 
 	string dstPath = tempdir.path() / "decrypted";
 	{
 		string skpath = keypath + ".sk";
-		int res = mcleece_decrypt(skpath.data(), skpath.size(), password.data(), password.size(), encryptedPath.data(), encryptedPath.size(), dstPath.data(), dstPath.size(), mcleece_flag_base64);
+		int res = mcleece_decrypt(skpath.data(), skpath.size(), password.data(), password.size(), encryptedPath.data(), encryptedPath.size(),
+		                          dstPath.data(), dstPath.size(), mcleece_flag_base64);
 		assertEquals(0, res);
 	}
 
-	assertEquals( "hello friends", File(dstPath).read_all() );
+	assertEquals("hello friends", File(dstPath).read_all());
 }

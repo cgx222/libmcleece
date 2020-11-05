@@ -11,8 +11,9 @@ class b64_instream
 {
 public:
 	b64_instream(INSTREAM& stream)
-		: _stream(stream)
-	{}
+	    : _stream(stream)
+	{
+	}
 
 	operator bool() const
 	{

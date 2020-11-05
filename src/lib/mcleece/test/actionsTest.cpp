@@ -7,25 +7,26 @@
 #include "util/MakeTempDirectory.h"
 
 #include "PicoSHA2/picosha2.h"
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <sstream>
 #include <string>
 
 using std::string;
 using namespace std;
 
-namespace {
-	std::string get_hash(std::string filename)
-	{
-		std::ifstream f(filename, std::ios::binary);
-		std::vector<unsigned char> hash(picosha2::k_digest_size);
-		picosha2::hash256(f, hash.begin(), hash.end());
-		return picosha2::bytes_to_hex_string(hash);
-	}
+namespace
+{
+std::string get_hash(std::string filename)
+{
+	std::ifstream f(filename, std::ios::binary);
+	std::vector<unsigned char> hash(picosha2::k_digest_size);
+	picosha2::hash256(f, hash.begin(), hash.end());
+	return picosha2::bytes_to_hex_string(hash);
 }
+}  // namespace
 
-TEST_CASE( "actionsTest/testDecrypt", "[unit]" )
+TEST_CASE("actionsTest/testDecrypt", "[unit]")
 {
 	MakeTempDirectory tempdir;
 
@@ -45,10 +46,10 @@ TEST_CASE( "actionsTest/testDecrypt", "[unit]" )
 
 	std::stringstream ss;
 	assertEquals(0, mcleece::actions::decrypt(tempdir.path() / "test.sk", "password", std::ifstream(tempdir.path() / "encrypted_msg"), ss));
-	assertEquals( "hello world", ss.str() );
+	assertEquals("hello world", ss.str());
 }
 
-TEST_CASE( "messageTest/testEncrypt", "[unit]" )
+TEST_CASE("messageTest/testEncrypt", "[unit]")
 {
 	MakeTempDirectory tempdir;
 
@@ -61,21 +62,21 @@ TEST_CASE( "messageTest/testEncrypt", "[unit]" )
 	}
 
 	std::stringstream ss;
-	assertEquals( 0, mcleece::actions::encrypt(tempdir.path() / "test.pk", std::ifstream(tempdir.path() / "helloworld"), ss) );
+	assertEquals(0, mcleece::actions::encrypt(tempdir.path() / "test.pk", std::ifstream(tempdir.path() / "helloworld"), ss));
 
 	std::string enc_message = ss.str();
 	auto session_nonce = mcleece::decode_session(secret, enc_message);
-	assertTrue( session_nonce );
+	assertTrue(session_nonce);
 
 	mcleece::session_key& enc_session = session_nonce->first;
 	mcleece::nonce& enc_n = session_nonce->second;
 
 	std::string ciphertext = enc_message.substr(mcleece::encoded_session_size());
 	std::string message = mcleece::decrypt(enc_session, ciphertext, enc_n);
-	assertEquals( "hello friends", message );
+	assertEquals("hello friends", message);
 }
 
-TEST_CASE( "actionsTest/testRoundtrip", "[unit]" )
+TEST_CASE("actionsTest/testRoundtrip", "[unit]")
 {
 	MakeTempDirectory tempdir;
 
@@ -88,15 +89,15 @@ TEST_CASE( "actionsTest/testRoundtrip", "[unit]" )
 
 	{
 		std::ofstream f(tempdir.path() / "encrypted_msg");
-		assertEquals( 0, mcleece::actions::encrypt(tempdir.path() / "test.pk", std::ifstream(tempdir.path() / "helloworld"), f) );
+		assertEquals(0, mcleece::actions::encrypt(tempdir.path() / "test.pk", std::ifstream(tempdir.path() / "helloworld"), f));
 	}
 
 	std::stringstream ss;
 	assertEquals(0, mcleece::actions::decrypt(tempdir.path() / "test.sk", "password", std::ifstream(tempdir.path() / "encrypted_msg"), ss));
-	assertEquals( "hello friends", ss.str() );
+	assertEquals("hello friends", ss.str());
 }
 
-TEST_CASE( "actionsTest/testRoundtrip.BigFile", "[unit]" )
+TEST_CASE("actionsTest/testRoundtrip.BigFile", "[unit]")
 {
 	MakeTempDirectory tempdir;
 
@@ -105,22 +106,20 @@ TEST_CASE( "actionsTest/testRoundtrip.BigFile", "[unit]" )
 	{
 		std::ofstream f(tempdir.path() / "bigfile");
 		const unsigned size = 10000000;
-		for (unsigned i = 0; i < size; i+=10)
+		for (unsigned i = 0; i < size; i += 10)
 			f << "0123456789";
 	}
 
 	{
 		std::ofstream f(tempdir.path() / "encrypted_msg");
-		assertEquals( 0, mcleece::actions::encrypt(tempdir.path() / "test.pk", std::ifstream(tempdir.path() / "bigfile"), f) );
+		assertEquals(0, mcleece::actions::encrypt(tempdir.path() / "test.pk", std::ifstream(tempdir.path() / "bigfile"), f));
 	}
 
 	{
 		std::ofstream f(tempdir.path() / "decrypted");
-		assertEquals( 0, mcleece::actions::decrypt(tempdir.path() / "test.sk", "password", std::ifstream(tempdir.path() / "encrypted_msg"), f) );
+		assertEquals(0, mcleece::actions::decrypt(tempdir.path() / "test.sk", "password", std::ifstream(tempdir.path() / "encrypted_msg"), f));
 	}
 
 	string actual = get_hash(tempdir.path() / "decrypted");
 	assertEquals("d52fcc26b48dbd4d79b125eb0a29b803ade07613c67ac7c6f2751aefef008486", actual);
 }
-
-

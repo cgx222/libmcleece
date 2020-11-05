@@ -5,12 +5,14 @@
 #include "message.h"
 
 #include "serialize/format.h"
-#include <string>
 #include <sstream>
+#include <string>
 #include <vector>
 
-namespace mcleece {
-namespace actions {
+namespace mcleece
+{
+namespace actions
+{
 	static const int MAX_MESSAGE_LENGTH = 0x100000;
 
 	static int generate_keypair(std::string keypath, std::string pw)
@@ -103,4 +105,5 @@ namespace actions {
 		}
 		return 0;
 	}
-}}
+}  // namespace actions
+}  // namespace mcleece

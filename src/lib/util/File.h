@@ -7,28 +7,28 @@
 #include <string>
 
 #if defined(__unix__) || (defined(__APPLE__) && defined(__MACH__)) || defined(__HAIKU__)
-# include <fcntl.h>
+#include <fcntl.h>
 #endif
 
 class File
 {
 public:
-	File(std::string filename, bool write=false, int mode=0)
+	File(std::string filename, bool write = false, int mode = 0)
 	{
 		if (write and mode != 0)
 		{
-			#if defined(__unix__) || (defined(__APPLE__) && defined(__MACH__)) || defined(__HAIKU__)
-				int fd;
-				if ((fd = ::open(filename.c_str(), O_CREAT | O_TRUNC | O_WRONLY, (mode_t) mode)) == -1)
-					_fp = NULL;
-				else
-					_fp = fdopen(fd, "wb");
-			#else
-				_fp = fopen(filename.c_str(), "wb");
-			#endif
+#if defined(__unix__) || (defined(__APPLE__) && defined(__MACH__)) || defined(__HAIKU__)
+			int fd;
+			if ((fd = ::open(filename.c_str(), O_CREAT | O_TRUNC | O_WRONLY, (mode_t)mode)) == -1)
+				_fp = NULL;
+			else
+				_fp = fdopen(fd, "wb");
+#else
+			_fp = fopen(filename.c_str(), "wb");
+#endif
 		}
 		else
-			_fp = fopen(filename.c_str(), write? "wb" : "rb");
+			_fp = fopen(filename.c_str(), write ? "wb" : "rb");
 	}
 
 	std::string read_all()
